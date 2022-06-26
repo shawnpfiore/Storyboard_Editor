@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Task xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"> 
+  <Title>This is the lesson title</Title>
+  <ShortName>Storyboard 2</ShortName>
+  <Date>2018-12-25_01-25-36-PM</Date>
+  <StoryboardToolVersion>1.1.0</StoryboardToolVersion>
+  <CinematicLevel>/cinematic</CinematicLevel> <!-- Nor sure if we need this-->
+  <TaskData>
+    <Text>Task text</Text> <!-- Set this with the Task data?-->
+    <Step Id="ST01">
+      <StepData>
+        <Text>Step text</Text>
+        <ObjectName>Name</ObjectName> <!-- AudioClip, avatar, etc...-->
+      </StepData>
+    </Step>
+    <Step Id="ST02">
+      <StepData>
+        <Text></Text>
+        <ObjectName></ObjectName>
+      </StepData>
+    </Step>
+  </TaskData>
+  <Transitions>
+    <Transition>
+      <FromStep>ST01</FromStep>
+      <ToStep>GC01</ToStep>
+      <Condition>true</Condition>
+    </Transition>
+    <Transition>
+      <FromStep>ST02</FromStep>
+      <ToStep>GC01</ToStep>
+      <Condition>true</Condition>
+    </Transition>
+    <Transition>
+      <FromStep>GC01</FromStep>
+      <ToStep>GC02</ToStep>
+    </Transition>
+    <Transition>
+      <FromStep>GC02</FromStep>
+      <ToStep>GC03</ToStep>
+    </Transition>
+    <Transition>
+      <FromStep>GC03</FromStep>
+      <ToStep>GC04</ToStep>
+    </Transition>
+    <Transition>
+      <FromStep>GC04</FromStep>
+    </Transition>
+  </Transitions>
+  <GameCues>
+    <GameCue xsi:type ="PlayAudioCue" Id="GC01">
+      <AudioClip>some audio filename</AudioClip>
+      <Caption>Some caption</Caption>
+    </GameCue>
+    <GameCue xsi:type ="PlayAudioCue" Id="GC02">
+      <AudioClip></AudioClip>
+      <Caption></Caption>
+    </GameCue>
+    <GameCue xsi:type ="SnapToCameraCue" Id="GC03">
+      <CameraName>Camera1</CameraName>
+      <CameraName>Camera2</CameraName>
+    </GameCue>
+    <GameCue xsi:type ="SmartObjectCue" Id="GC04">
+      <ObjectName>EPT_M</ObjectName>
+      <Highlight>Pulse</Highlight>
+    </GameCue>
+    <GameCue xsi:type ="PlayAudioCue" Id="GC05">
+      <AudioClip></AudioClip>
+      <Caption></Caption>
+    </GameCue>
+  </GameCues>
+</Task>

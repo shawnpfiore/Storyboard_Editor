@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="StoryboardCues.View.HighlightObjectsCueView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:StoryboardCues.View"
+             xmlns:model="clr-namespace:StoryboardCues.Model"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="700">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/StoryboardResources;component/StoryboardResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <model:HighlightObjectsCueModel x:Key="DataSource"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <UserControl.Effect>
+        <DropShadowEffect/>
+    </UserControl.Effect>
+    <UserControl.DataContext>
+        <Binding Source="{StaticResource DataSource }" />
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="{StaticResource HighlightObjectsCue}" Opacity=".60"/>
+        </Grid.Background>
+        <Grid Height="25" VerticalAlignment="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Name="DeleteButton" Content="Delete" Width="75" Command="{Binding DeleteCueCommand}" />
+            <Button Grid.Column="1" Name="ReplaceButton" Content="Replace" Width="75" Command="{Binding ReplaceCueCommand}"/>
+            <Button Grid.Column="2" Name="AddCueAboveButton" Content="Add Above" Width="75" Command="{Binding AddCueAboveCommand}"/>
+            <Button Grid.Column="3" Name="AddCueBelowButton" Content="Add Below" Width="75" Command="{Binding AddCueBelowCommand}"/>
+        </Grid>
+        <TextBlock Text="{Binding CueName}" HorizontalAlignment="Center" FontWeight="Bold" FontSize="22" Height="35" VerticalAlignment="Top"/>
+        <TextBlock x:Name="TextBlockCueId" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding CueId}" VerticalAlignment="Top" Margin="5,0,0,0" FontWeight="Bold" FontSize="18"/>
+        <TextBlock x:Name="GameObjectTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Game Object" VerticalAlignment="Top" Margin="28,68,0,0" FontWeight="Bold" FontSize="16"/>
+        <TextBlock x:Name="HighlightTextBlock" HorizontalAlignment="Left" Margin="28,139,0,0" TextWrapping="Wrap" Text="Highlight" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+
+        <TextBox x:Name="GameObjectTextBox" HorizontalAlignment="Center" Height="25" TextWrapping="Wrap" Text="{Binding GameObjectName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Width="200" Margin="28,94,472,181" Background="#BFFFFFFF" BorderBrush="Black" BorderThickness="3"/>
+        <ComboBox x:Name="comboBox" HorizontalAlignment="Center" Margin="28,165,552,110" VerticalAlignment="Center" Width="120" BorderBrush="Black" BorderThickness="3" Height="25" SelectedItem="{Binding SelectedHightlightItem}">
+            <!--TODO (SF) The choices need to de Data Driven based on project selected-->
+            <ComboBoxItem IsSelected="True">Pulse</ComboBoxItem>
+            <ComboBoxItem>Highlight</ComboBoxItem>
+            <ComboBoxItem>Solid</ComboBoxItem>
+            <ComboBox.Background>
+                <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                    <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                    <GradientStop Color="#BFE5E5E5" Offset="1"/>
+                </LinearGradientBrush>
+            </ComboBox.Background>
+        </ComboBox>
+        <ListView Width="350" Height="225" Background="#BFFFFFFF" BorderBrush="Black" BorderThickness="3" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="200,0,40,0" ItemsSource="{Binding ListViewItems}" SelectedItem="{Binding SelectedListViewItem, Mode=TwoWay}" FontWeight="Bold" FontSize="14">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Game Object Name" Width="210" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Highlight Name" Width="120" DisplayMemberBinding="{Binding Highlight}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="AddGameObjectButton" Content="Add" HorizontalAlignment="Center" Margin="50,210,575,70" VerticalAlignment="Center" Width="75" Command="{Binding AddButtonCommand}"/>
+        <Button x:Name="RemoveGameObjectButton" Content="Remove" HorizontalAlignment="Center" Margin="616,0,10,0" VerticalAlignment="Center" Width="74" Command="{Binding RemoveButtonCommand}"/>
+    </Grid>
+</UserControl>

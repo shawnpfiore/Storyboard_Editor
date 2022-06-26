@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="StoryboardCues.View.SmartObjectCueView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:StoryboardCues.View"
+             xmlns:model="clr-namespace:StoryboardCues.Model"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="700">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/StoryboardResources;component/StoryboardResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <model:SmartObjectCueModel x:Key="DataSource"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <UserControl.Effect>
+        <DropShadowEffect/>
+    </UserControl.Effect>
+    <UserControl.DataContext>
+        <Binding Source="{StaticResource DataSource }" />
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="{StaticResource SmartObjectCue}" Opacity=".60"/>
+        </Grid.Background>
+        <Grid Height="25" VerticalAlignment="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Name="DeleteButton" Content="Delete" Width="75" Command="{Binding DeleteCueCommand}" />
+            <Button Grid.Column="1" Name="ReplaceButton" Content="Replace" Width="75" Command="{Binding ReplaceCueCommand}"/>
+            <Button Grid.Column="2" Name="AddCueAboveButton" Content="Add Above" Width="75" Command="{Binding AddCueAboveCommand}"/>
+            <Button Grid.Column="3" Name="AddCueBelowButton" Content="Add Below" Width="75" Command="{Binding AddCueBelowCommand}"/>
+        </Grid>
+        <TextBlock Text="{Binding CueName}" HorizontalAlignment="Center" FontWeight="Bold" FontSize="22" Height="35" VerticalAlignment="Top"/>
+        <TextBlock x:Name="TextBlockCueId" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding CueId}" VerticalAlignment="Top" Margin="5,0,0,0" FontWeight="Bold" FontSize="18"/>
+        <TextBlock x:Name="GameObjectTextBlock" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Game Object Name" VerticalAlignment="Center" Margin="0,0,0,125" FontWeight="Bold" FontSize="16"/>
+        <TextBox x:Name="GameObjectCheckBox" HorizontalAlignment="Center" Height="26" Margin="0,0,0,75" TextWrapping="Wrap" Text="{Binding SmartObjectName}" VerticalAlignment="Center" Width="300" BorderBrush="Black" BorderThickness="3" Background="#BFFFFFFF"/>
+        <TextBlock x:Name="HighlightTextBlock" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Game Object Highlight" VerticalAlignment="Center" Margin="0" FontWeight="Bold" FontSize="16"/>
+        <ComboBox x:Name="HighlightComboBox" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Center" Width="120" BorderBrush="Black" BorderThickness="3" SelectedItem="{Binding SelectedHighlightItem}">
+            <!--TODO (SF) The choices need to de Data Driven based on project selected-->
+            <ComboBoxItem IsSelected="True">Pulse</ComboBoxItem>
+            <ComboBoxItem>Highlight</ComboBoxItem>
+            <ComboBoxItem>Solid</ComboBoxItem>
+            <ComboBox.Background>
+                <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                    <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                    <GradientStop Color="#BFE5E5E5" Offset="1"/>
+                </LinearGradientBrush>
+            </ComboBox.Background>
+        </ComboBox>
+        <CheckBox x:Name="ConditionCheckBox" Content="Condition" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,150,0,0" Background="#BFFFFFFF" FontWeight="Bold" FontSize="16" BorderBrush="Black" BorderThickness="3" IsChecked="{Binding IsConditionSelected}"/>
+
+    </Grid>
+</UserControl>

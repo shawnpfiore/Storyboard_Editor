@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="Task">
+    <xs:complexType>
+      <xs:sequence>
+        <!-- Storyboard info -->
+        <xs:element name="Title" type="xs:string" />
+        <xs:element name="ShortName" type="xs:string" />
+        <xs:element name="Date" type="xs:string" />
+        <xs:element name="StoryboardToolVersion" type="xs:string" />
+        <xs:element name="CinematicLevel" type="xs:string" />
+        <xs:element name="TaskData" type="CommonData" />
+
+        <!-- Storyboard specific info -->
+        <xs:element name="TimeOfDay" type="xs:int" minOccurs="0"/>
+
+        <!-- Sections for specific data types -->
+        <xs:element name="Transitions" type="Transitions" minOccurs="0" maxOccurs="1" />
+        <xs:element name="GameCues" type="GameCues" minOccurs="0" maxOccurs="1" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Task types -->
+  <xs:complexType name="CommonData">
+    <xs:sequence>
+      <xs:element name="Text" type="xs:string" minOccurs="0" />
+      <xs:element name="Step" type="Step" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="ObjectName" type="xs:string" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="Step">
+    <xs:sequence>
+      <xs:element name="StepData" type="CommonData" />
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:ID" />
+  </xs:complexType>
+
+  <!-- Transition Types-->
+  <xs:complexType name="Transitions">
+    <xs:sequence>
+      <xs:element name="Transition"  type="Transition"  minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Transition">
+    <xs:sequence>
+      <xs:element name="FromStep"   type="xs:IDREF"   minOccurs="0" />
+      <xs:element name="ToStep"     type="xs:IDREF"   minOccurs="0" />
+      <xs:element name="Condition"  type="xs:boolean"   minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <!--  -->
+  <!-- Game Cue types -->
+  <!--  -->
+  <xs:complexType name="GameCues">
+    <xs:sequence>
+      <xs:element name="GameCue"  type="CueBase"  minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="CueBase">
+    <xs:attribute name="Id" type="xs:ID" />
+  </xs:complexType>
+
+  <!-- Blocks and activates an interactable object in game -->
+  <xs:complexType name="SmartObjectCue">
+    <xs:complexContent>
+      <xs:extension base="CueBase">
+        <xs:sequence>
+          <xs:element name="ObjectName" type="xs:string"  minOccurs="1" maxOccurs="1"/>
+          <xs:element name="Highlight" type="xs:string"  minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <!-- Plays audio in the game -->
+  <xs:complexType name="PlayAudioCue">
+    <xs:complexContent>
+      <xs:extension base="CueBase">
+        <xs:sequence>
+          <xs:element name="AudioClip"  type="xs:string"  minOccurs="1" maxOccurs="1"/>
+          <xs:element name="Caption"    type="xs:string"  minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <!-- Snaps to a camera-->
+  <xs:complexType name="SnapToCameraCue">
+    <xs:complexContent>
+      <xs:extension base="CueBase">
+        <xs:sequence>
+          <!-- Object to look at -->
+          <xs:element name="CameraName" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
+          <!-- Delay in seconds before advancing and killing the effect-->
+          <xs:element name="Delay" type="xs:float" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="DelayCue">
+    <xs:complexContent>
+      <xs:extension base="CueBase">
+        <xs:sequence>
+          <!-- Delay in seconds to block the storyboard before advancing -->
+          <xs:element name="Delay" type="xs:float" minOccurs="1" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <!-- Snaps to a camera-->
+  <xs:complexType name="HighlightObjectsCue">
+    <xs:complexContent>
+      <xs:extension base="CueBase">
+        <xs:sequence>
+          <!-- Object to look at -->
+          <xs:element name="GameObjects" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
+          <!-- Delay in seconds before advancing and killing the effect-->
+          <xs:element name="Highlight" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="UnknownCue">
+    <xs:complexContent>
+      <xs:extension base="CueBase">
+        <xs:sequence>
+          <!-- Delay in seconds to block the storyboard before advancing -->
+          <xs:element name="Description" type="xs:string" minOccurs="1" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

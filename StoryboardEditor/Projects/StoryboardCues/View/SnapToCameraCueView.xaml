@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="StoryboardCues.View.SnapToCameraCueView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:StoryboardCues.View"
+             xmlns:model="clr-namespace:StoryboardCues.Model"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="700">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/StoryboardResources;component/StoryboardResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <model:SnapToCameraCueModel x:Key="DataSource"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <UserControl.Effect>
+        <DropShadowEffect/>
+    </UserControl.Effect>
+    <UserControl.DataContext>
+        <Binding Source="{StaticResource DataSource }" />
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="{StaticResource SnapToCameraCue}" Opacity=".60"/>
+        </Grid.Background>
+        <Grid Height="25" VerticalAlignment="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Name="DeleteButton" Content="Delete" Width="75" Command="{Binding DeleteCueCommand}" />
+            <Button Grid.Column="1" Name="ReplaceButton" Content="Replace" Width="75" Command="{Binding ReplaceCueCommand}"/>
+            <Button Grid.Column="2" Name="AddCueAboveButton" Content="Add Above" Width="75" Command="{Binding AddCueAboveCommand}"/>
+            <Button Grid.Column="3" Name="AddCueBelowButton" Content="Add Below" Width="75" Command="{Binding AddCueBelowCommand}"/>
+        </Grid>
+        <TextBlock Text="{Binding CueName}" HorizontalAlignment="Center" FontWeight="Bold" FontSize="22" Height="35" VerticalAlignment="Top"/>
+        <TextBlock x:Name="TextBlockCueId" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding CueId}" VerticalAlignment="Top" Margin="5,0,0,0" FontWeight="Bold" FontSize="18"/>
+        <ListView x:Name="CameraListBoxView" HorizontalAlignment="Center" Height="225" VerticalAlignment="Center" Width="350" Margin="260,40,90,35" BorderThickness="3" Background="#BFFFFFFF" BorderBrush="Black" ItemsSource="{Binding ListViewItems}" SelectedItem="{Binding SelectedCameraItem}" FontWeight="Bold" FontSize="14">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Camera" Width="210" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Delay" Width="120" DisplayMemberBinding="{Binding Delay}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <TextBlock x:Name="CameraNameTextBlock" HorizontalAlignment="Left" Margin="50,61,0,218" TextWrapping="Wrap" Text="Camera Name" VerticalAlignment="Center" FontWeight="Bold" FontSize="16"/>
+        <TextBox x:Name="AddCameraTextBox" Text="{Binding CameraName}" HorizontalAlignment="Left" Height="25" Margin="50,0,0,100" TextWrapping="Wrap" VerticalAlignment="Center" Width="200" Background="#BFFFFFFF" BorderThickness="3" BorderBrush="Black"/>
+        <Button x:Name="AddCameraButton" Content="Add" HorizontalAlignment="Left" Margin="81,196,0,84" VerticalAlignment="Center" Width="75" Command="{Binding AddCameraCommand}"/>
+        <Button x:Name="RemoveButton" Content="Remove" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="615,149,10,129" Width="75" Command="{Binding RemoveCameraCommand}"/>
+        <TextBox x:Name="DelayTextBox" HorizontalAlignment="Left" Height="25" Margin="50,149,0,0" TextWrapping="Wrap" Text="{Binding CameraDelay}" VerticalAlignment="Top" Width="150" Background="#BFFFFFFF" BorderBrush="Black" BorderThickness="3"/>
+        <TextBlock x:Name="DelayTextBlock" HorizontalAlignment="Left" Margin="50,123,0,0" TextWrapping="Wrap" Text="Delay in seconds" VerticalAlignment="Top" FontWeight="Bold" FontSize="16"/>
+
+    </Grid>
+</UserControl>
